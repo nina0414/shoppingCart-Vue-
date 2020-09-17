@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Vue購物車</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="shoppingCart.css">
+
+</head>
+
+<body>
+	<div id="app">
+		<div class="shoppingCartPage">
+			<div class="shoppingCartNaverBar">
+				<div class="product same">商品</div>
+				<div class="price same">價格</div>
+				<div class="amount same">數量</div>
+				<div class="tatol same">總計</div>
+			</div>
+			<div class="shoppingCartItemGroup">
+				<div class="itemWrap" v-for='(item,index) in itemList' :key='index'>
+					<div class="itemImg">
+						<img v-bind:src=item.imgUrl class="itemPic">
+					</div>
+					<div class="itemPrice">${{item.price}}</div>
+					<div class="itemtotal">
+						<button @click='add(item)'>+</button>
+						{{item.count}}
+						<button @click='subtract(item)'>-</button>
+					</div>
+					<button class="itemDelete" @click='deleteBtn(index)'> 移出購物車 </button>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'hello World',
+				itemList: [{
+						id: '1',
+						itemName: '簡約白T',
+						imgUrl: 'image/t_white.jpg',
+						price: '500',
+						count: '1'
+					},
+					{
+						id: '2',
+						itemName: '法式長裙',
+						imgUrl: 'image/skirt.jpg',
+						price: '1200',
+						count: '1'
+					},
+					{
+						id: '3',
+						itemName: '率性黑T',
+						imgUrl: 'image/t_black.jpg',
+						price: '500',
+						count: '1'
+					},
+					{
+						id: '4',
+						itemName: '典雅長褲',
+						imgUrl: 'image/pants.jpg',
+						price: '1600',
+						count: '5'
+					},
+
+				]
+			},
+			methods: {
+				add(item) {
+					item.count++;
+				},
+				subtract(item) {
+					if (item.count < 2) {
+						alert('商品數量低於一件喔');
+					} else {
+						item.count--;
+					}
+				},
+				deleteBtn(index) {
+					this.itemList.splice(index, 1);
+				},
+			},
+			computed: {
+
+			}
+		})
+	</script>
+	<style>
+		.shoppingCartPage {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+			background-image: url(image/bg.jpg);
+			
+			
+		}
+
+		.shoppingCartNaverBar {
+			display: flex;
+
+			align-items: center;
+			width: 80%;
+			background-color: #f8c291;
+			border-radius: 5px;
+		}
+
+		.itemWrap {
+			margin: 30px 0;
+		}
+
+		.same {
+			margin: 10px 120px;
+			word-wrap: nowarp;
+			white-space: nowrap;
+			color: rgba(0, 0, 0, 0.5);
+		}
+
+		.shoppingCartItemGroup {
+			width: 80%;
+			margin-top: 40px;
+			background-color: #f8c291;
+			border-radius: 5px;
+		}
+
+		.itemWrap {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			background-color: white;
+		}
+
+		.itemPic {
+			display: block;
+			height: 200px;
+			margin: 10px 0;
+		}
+	</style>
+</body></html>
